@@ -1,0 +1,672 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600;800&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bites & Brew — Pizza, Pastas & Coffee</title>
+  <meta name="description" content="Bites & Brew — A cozy eatery. Reserve table, order, feedback." />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <style>
+    /* ---------- Reset & base ---------- */
+    :root{
+      --bg-1: #F7FEFF;
+      --accent-1: #00E5D4; /* vibrant pastel aqua */
+      --accent-2: #00C4BE; /* deeper aqua */
+      --accent-3: #0F7E83; /* deep aqua slate for text */
+      --muted: #7CCAC9; /* soft secondary text */
+      --card: rgba(255,255,255,0.92);
+      --glass: rgba(255,255,255,0.70);
+      --shadow-1: rgba(0,210,204,0.12);
+      --shadow-2: rgba(0,180,175,0.16);
+      font-family: 'Poppins', 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;background:linear-gradient(180deg,#F7FEFF 0%,#E9FBFF 45%,#E0FAFF 100%);color:var(--accent-3);-webkit-font-smoothing:antialiased;}
+    a{color:inherit}
+
+    /* ---------- Layout ---------- */
+    .container{max-width:1200px;margin:0 auto;padding:28px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:16px;position:relative;padding:8px 0}
+    .nav-center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;gap:18px;align-items:center}
+    .nav-center .nav-link{background:transparent;border:1px solid transparent;color:var(--accent-3);padding:10px 14px;border-radius:14px;font-weight:600;cursor:pointer;transition:all .18s ease;position:relative;overflow:visible}
+    .nav-center .nav-link::before{content:'';position:absolute;inset:-6px;border-radius:14px;background:linear-gradient(90deg,var(--accent-1),var(--accent-2));opacity:0;filter:blur(10px);transition:opacity .18s ease,transform .18s ease;z-index:-1}
+    .nav-center .nav-link:hover::before{opacity:1;transform:scale(1.03)}
+    .nav-center .nav-link:hover{box-shadow:0 12px 30px rgba(0,210,204,0.08);transform:translateY(-4px);border-color:rgba(0,210,204,0.12)}
+    .nav-right{display:flex;gap:12px;align-items:center}
+    .search-input{background:linear-gradient(180deg,rgba(255,255,255,0.95),rgba(255,255,255,0.9));padding:12px 18px;border-radius:999px;border:1px solid rgba(0,0,0,0.03);min-width:260px;color:var(--accent-3);box-shadow:inset 0 1px 0 rgba(255,255,255,0.6);}
+    .search-input::placeholder{color:rgba(15,126,131,0.35)}
+    .logo{transition:transform .28s ease,box-shadow .28s ease}
+    .logo:hover{transform:translateY(-6px) scale(1.04);box-shadow:0 18px 40px rgba(0,210,204,0.12)}
+    .logo::after{content:'';position:absolute;left:6px;top:6px;width:64px;height:64px;border-radius:22px;border:1px solid rgba(255,255,255,0.6);pointer-events:none;}
+
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:64px;height:64px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-weight:800;background:linear-gradient(135deg,var(--accent-1),var(--accent-2));color:white}
+    h1{margin:0;font-size:20px;font-family:'Playfair Display', 'Poppins', serif}
+    p.lead{margin:0;color:var(--muted);font-size:13px}
+
+    nav{display:flex;gap:12px;align-items:center}
+    .btn{background:var(--card);color:var(--accent-3);padding:12px 18px;border-radius:999px;border:0;cursor:pointer;font-weight:700;transition:transform .18s ease,box-shadow .18s ease,filter .18s ease;position:relative;overflow:visible}
+    .btn::before{content:'';position:absolute;inset:-6px;border-radius:999px;background:linear-gradient(90deg,var(--accent-1),var(--accent-2));opacity:0;filter:blur(12px);transition:opacity .22s ease,transform .22s ease;z-index:-1}
+    .btn:hover::before{opacity:1;transform:scale(1.06)}
+    .btn.primary{background:linear-gradient(90deg,#00E5D4,#00C4BE);color:white;position:relative;overflow:hidden}
+    .btn.primary::after{content:'';position:absolute;left:-60%;top:0;width:60%;height:100%;background:linear-gradient(90deg, rgba(255,255,255,0.30), rgba(255,255,255,0.06));transform:skewX(-20deg);transition:all .6s ease;z-index:1}
+    .btn.primary:hover::after{left:120%}
+    .btn:focus{outline:none;box-shadow:0 0 0 6px rgba(51,230,214,0.12)}
+    .btn.ghost{background:transparent;border:1px solid rgba(0,0,0,0.02);color:var(--accent-3)}
+
+    /* ---------- Hero ---------- */
+    .hero{display:grid;grid-template-columns:1fr 520px;gap:28px;align-items:center;margin-top:24px}
+    .hero-card{background:linear-gradient(180deg,var(--glass),rgba(255,255,255,0.9));padding:28px;border-radius:26px;backdrop-filter:blur(10px);box-shadow:18px 18px 36px rgba(60,210,200,0.08), -12px -12px 24px rgba(255,255,255,0.9)}
+    .hero h2{font-size:34px;margin:0 0 12px;color:var(--accent-3);font-family:'Playfair Display', serif;font-weight:700}
+    .hero p{color:var(--muted);margin:0}
+    .hero-visual{border-radius:26px;overflow:hidden;box-shadow:28px 28px 60px rgba(60,210,200,0.08);transition:transform .6s ease,box-shadow .4s ease}
+    .hero-visual:hover{transform:translateY(-8px) scale(1.01);box-shadow:0 60px 110px rgba(51,230,214,0.14)}
+    .hero-visual img{width:100%;height:100%;object-fit:cover;display:block}
+    .cta-row{margin-top:18px;display:flex;gap:12px}
+
+    /* ---------- Menu grid (neumo cards) ---------- */
+    section.menu{margin-top:28px}
+    .menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,0.95),rgba(255,255,255,0.93));color:var(--accent-3);padding:18px;border-radius:22px;transition:transform .28s cubic-bezier(.2,.9,.2,1),box-shadow .28s,filter .28s;box-shadow:14px 14px 30px rgba(60,210,200,0.06), -10px -10px 24px rgba(255,255,255,0.9)}
+    .card:hover{transform:translateY(-10px) scale(1.02);box-shadow:0 24px 48px var(--shadow-2);}
+    .card img{width:100%;height:170px;border-radius:16px;object-fit:cover}
+    .card h3{margin:10px 0 6px;font-weight:700;font-family:'Playfair Display', serif}
+    .card p{margin:0;color:var(--muted);font-size:13px}
+    .card .meta{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
+    .card .meta .price{font-weight:800}
+    .card .actions{margin-top:12px;display:flex;gap:8px}
+
+    /* glass separator */
+    .panel{background:linear-gradient(180deg,rgba(255,255,255,0.86),rgba(255,255,255,0.82));padding:18px;border-radius:18px;box-shadow:14px 14px 36px rgba(60,210,200,0.06), -8px -8px 24px rgba(255,255,255,0.9);backdrop-filter:blur(8px)}
+
+    /* ---------- Floating actions (pill) ---------- */
+    .fab{position:fixed;right:22px;bottom:22px;display:flex;flex-direction:column;gap:12px;z-index:50}
+    .fab button{width:64px;height:64px;border-radius:999px;border:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(90deg,var(--accent-1),var(--accent-2));color:white;box-shadow:20px 20px 40px rgba(60,210,200,0.12);cursor:pointer;transition:transform .18s ease}
+    .fab button:hover{transform:translateY(-8px);box-shadow:0 40px 90px rgba(51,230,214,0.16)}
+
+    /* ---------- Modal ---------- */
+    .modal-backdrop{position:fixed;inset:0;background:linear-gradient(180deg, rgba(255,255,255,0.45), rgba(255,255,255,0.35));display:flex;align-items:center;justify-content:center;z-index:60;backdrop-filter:blur(6px)}
+    .modal{width:100%;max-width:880px;background:linear-gradient(180deg,rgba(255,255,255,0.98),rgba(255,255,255,0.96));color:var(--accent-3);border-radius:20px;padding:22px;box-shadow:18px 18px 40px rgba(60,210,200,0.08), -12px -12px 24px rgba(255,255,255,0.9)}
+
+    /* ---------- Cart ---------- */
+    .cart-list{display:flex;flex-direction:column;gap:12px;max-height:360px;overflow:auto;padding-right:6px}
+    .cart-item{display:flex;gap:12px;align-items:center}
+    .qty{display:inline-flex;align-items:center;gap:6px}
+
+    /* ---------- Inputs ---------- */
+    input,textarea,select{padding:12px;border-radius:12px;border:1px solid rgba(0,0,0,0.02);width:100%;background:linear-gradient(180deg,transparent,rgba(0,0,0,0.01))}
+    input:focus,textarea:focus{outline:none;box-shadow:0 12px 36px rgba(51,230,214,0.08);border-color:rgba(51,230,214,0.12)}
+    .input-error{box-shadow:0 6px 18px rgba(255,96,96,0.12);border-color:rgba(255,96,96,0.18)}
+
+    /* ---------- Footer/map ---------- */
+    footer{margin-top:36px;padding:24px 0;color:var(--muted)}
+    .map{height:260px;border-radius:12px;overflow:hidden}
+
+    /* ---------- small screens ---------- */
+    @media (max-width:980px){
+      .hero{grid-template-columns:1fr;}
+      .menu-grid{grid-template-columns:repeat(2,1fr)}
+      .two-col{grid-template-columns:1fr}
+    }
+    @media (max-width:640px){
+      .menu-grid{grid-template-columns:1fr}
+      .logo{width:56px;height:56px}
+    }
+
+    /* ---------- Micro animations ---------- */
+    @keyframes floatY{0%{transform:translateY(0)}50%{transform:translateY(-8px)}100%{transform:translateY(0)}}
+    .float-slow{animation:floatY 6s ease-in-out infinite}
+    .float-medium{animation:floatY 4.4s ease-in-out infinite}
+
+    .glow {animation:glow 3s ease-in-out infinite}
+    @keyframes glow{0%{filter:drop-shadow(0 0 0 rgba(51,230,214,0))}50%{filter:drop-shadow(0 18px 44px rgba(51,230,214,0.12))}100%{filter:drop-shadow(0 0 0 rgba(51,230,214,0))}}
+
+    /* scrollbar small */
+    .cart-list::-webkit-scrollbar{width:8px}
+    .cart-list::-webkit-scrollbar-thumb{background:linear-gradient(90deg,var(--accent-1),var(--accent-2));border-radius:8px}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- SVG sprite: minimal pastel icons -->
+    <svg style="display:none" aria-hidden="true">
+      <symbol id="ico-coffee" viewBox="0 0 24 24">
+        <path fill="#34dfd0" d="M7 18h10a3 3 0 0 0 3-3v-1a5 5 0 0 0-5-5H6a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1z" />
+        <path fill="#79f7eb" d="M18 8h1a3 3 0 0 1 0 6h-1" />
+      </symbol>
+      <symbol id="ico-pizza" viewBox="0 0 24 24">
+        <path fill="#34dfd0" d="M12 2 2 7l10 15 10-15-10-5z" />
+        <circle fill="#b3fff7" cx="9" cy="11" r="1.6"/>
+        <circle fill="#79f7eb" cx="15" cy="13" r="1.2"/>
+      </symbol>
+      <symbol id="ico-pasta" viewBox="0 0 24 24">
+        <path fill="#34dfd0" d="M3 12c0 4.418 3.582 8 8 8s8-3.582 8-8"/>
+        <path fill="#b3fff7" d="M5 12c1.5-3 5-3 7 0"/>
+      </symbol>
+    </svg>
+
+    <header>
+      <div class="brand">
+        <div class="logo" aria-hidden="true">
+          <svg width="64" height="64" viewBox="0 0 180 90" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bites & Brew logo">
+            <defs>
+              <linearGradient id="logoGrad2" x1="0" x2="1" y1="0" y2="1">
+                <stop offset="0%" stop-color="#00E5D4"/>
+                <stop offset="100%" stop-color="#00C4BE"/>
+              </linearGradient>
+            </defs>
+            <rect x="2" y="2" rx="22" ry="22" width="176" height="86" fill="url(#logoGrad2)" opacity="0.98" />
+            <text x="50%" y="56%" text-anchor="middle" font-family="'Playfair Display', serif" font-size="44" font-weight="700" fill="#ffffff">B&amp;B</text>
+          </svg>
+        </div>
+        <div>
+          <h1>Bites & Brew</h1>
+          <p class="lead">Pizza • Pastas • Coffees — Cozy eatery</p>
+        </div>
+      </div>
+
+      <div class="nav-center" role="navigation" aria-label="Main navigation">
+        <button class="nav-link" id="navHome">Home</button>
+        <button class="nav-link" id="navMenu">Menu</button>
+        <button class="nav-link" id="navVisit">Visit</button>
+        <button class="nav-link" id="navTake">Takeaway</button>
+        <button class="btn primary" id="reserveBtn">Reserve</button>
+      </div>
+
+      <div class="nav-right">
+        <input id="search" class="search-input" placeholder="Search pizzas, pastas..." />
+        <button class="btn ghost" id="cartBtn">Cart (<span id="cartCount">0</span>)</button>
+      </div>
+    </header>
+
+    <main>
+      <div class="hero">
+        <div class="hero-card">
+          <h2>Taste the craft — handcrafted pizzas, pastas & small-batch coffee</h2>
+          <p style="margin-top:8px;color:var(--muted)">Open daily • Dine-in, takeaway & local delivery • Easy reservations</p>
+
+          <div class="cta-row">
+            <button class="btn primary" onclick="openReserve()">Reserve a table</button>
+            <button class="btn" onclick="scrollToMenu()">Order Now</button>
+            <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+              <div style="background:rgba(255,255,255,0.02);padding:8px;border-radius:10px;color:var(--muted)">Open: 9am — 11pm</div>
+            </div>
+          </div>
+
+          <div style="margin-top:18px;display:flex;gap:12px;align-items:center">
+            <img src="interior.jpg" style="width:120px;height:88px;object-fit:cover;border-radius:12px;box-shadow:0 8px 30px rgba(2,6,23,0.06)" />
+            <div style="color:var(--muted);font-size:13px">Try our Truffle Funghi — wild mushrooms, shaved truffle & fior di latte.</div>
+          </div>
+        </div>
+
+        <div class="hero-visual pulse">
+          <img src="interior.jpg" alt="hero" />
+        </div>
+      </div>
+
+      <!-- MENU -->
+      <section class="menu" id="menu">
+        <h2 style="margin-top:18px">Menu</h2>
+        <div style="margin-top:12px;color:var(--muted)">Curated pizzas, handcrafted pastas and specialty coffees.</div>
+
+        <div style="height:18px"></div>
+        <div class="menu-grid" id="menuGrid"></div>
+      </section>
+
+      <div class="two-col">
+        <div>
+          <div class="panel" style="margin-top:12px">
+            <h3>Feedback</h3>
+            <p style="color:var(--muted);margin-top:8px">Tell us what you loved or what we can improve.</p>
+            <div style="height:12px"></div>
+            <textarea id="feedbackTxt" placeholder="Write feedback..." style="min-height:120px"></textarea>
+            <div style="margin-top:8px;display:flex;justify-content:flex-end;gap:8px">
+              <button class="btn ghost" onclick="document.getElementById('feedbackTxt').value=''">Clear</button>
+              <button class="btn primary" onclick="sendFeedback()">Send Feedback</button>
+            </div>
+          </div>
+
+          <div class="panel" style="margin-top:12px">
+            <h3>Payment (Demo)</h3>
+            <p style="color:var(--muted);margin-top:8px">We mock payments in this demo. Integrate your gateway for production.</p>
+            <div style="height:8px"></div>
+            <div style="display:flex;gap:8px">
+              <input id="promo" placeholder="Promo code / UPI" />
+              <button class="btn" onclick="applyPromo()">Apply</button>
+            </div>
+            <div style="margin-top:12px;display:flex;gap:8px">
+              <button class="btn" onclick="checkout('card')">Pay with Card</button>
+              <button class="btn" onclick="checkout('upi')">Pay with UPI</button>
+            </div>
+          </div>
+        </div>
+
+        <aside>
+          <div class="panel">
+            <h3>Your Cart</h3>
+            <div style="height:8px"></div>
+            <div class="cart-list" id="cartList"><!-- items injected --></div>
+            <div style="margin-top:12px;display:flex;justify-content:space-between;align-items:center">
+              <div><strong>Total:</strong> ₹<span id="total">0</span></div>
+              <div style="display:flex;gap:8px"><button class="btn ghost" onclick="clearCart()">Clear</button><button class="btn primary" onclick="checkout('card')">Checkout</button></div>
+            </div>
+          </div>
+
+          <div class="panel" style="margin-top:12px">
+            <h4 style="margin:0">Reservations</h4>
+            <div style="color:var(--muted);font-size:13px;margin-top:6px">Quickly reserve a table — local only.</div>
+            <div style="height:8px"></div>
+            <button class="btn primary" onclick="openReserve()">New reservation</button>
+            <div id="resList" style="margin-top:12px"></div>
+            <div id="takeList" style="margin-top:12px"></div>
+          </div>
+        </aside>
+      </div>
+
+    </main>
+
+    <footer>
+      <div style="display:grid;grid-template-columns:1fr 320px;gap:18px;align-items:start">
+        <div>
+          <h3 style="margin:0">Bites & Brew</h3>
+          <div style="color:var(--muted);margin-top:8px">123 Food Lane, Good Vibes, Delhi — Open daily 9am–11pm</div>
+          <div style="margin-top:12px;display:flex;gap:8px">
+            <a class="btn ghost">Instagram</a><a class="btn ghost">Facebook</a><a class="btn ghost">Menu PDF</a>
+          </div>
+        </div>
+        <div>
+          <h4 style="margin:0">Find us</h4>
+          <div class="map" style="margin-top:8px">
+            <iframe width="100%" height="100%" frameborder="0" style="border:0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d224345.8390792732!2d77.06889927540002!3d28.527280000000007!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d19f4ab3c9c3b%3A0x8a1bf555f3b0b3a5!2sNew%20Delhi%2C%20Delhi%2C%20India!5e0!3m2!1sen!2sin!4v1600000000000!5m2!1sen!2sin"></iframe>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align:center;margin-top:14px;color:var(--muted);font-size:13px">© <span id="year"></span> Bites & Brew — made with ❤️</div>
+    </footer>
+  </div>
+
+  <!-- Modals container -->
+  <div id="modals"></div>
+
+  <script>
+    /* ----------------- Data ----------------- */
+    const MENU = [
+      {id:'p1',cat:'Pizza',name:'Margherita Rustica',desc:'San Marzano tomato, fior di latte, basil',price:349,img:'https://images.unsplash.com/photo-1601924928570-5d0b9be9b6f4?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=7a2f7b9d2b2d5f1e2a7b'},
+      {id:'p2',cat:'Pizza',name:'Truffle Funghi',desc:'Wild mushrooms, truffle oil, fontina',price:499,img:'https://images.unsplash.com/photo-1548365328-9f8b2986f24e?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=6d08d8d6e6d4c0b7a6f6'},
+      {id:'p3',cat:'Pizza',name:'Spicy Sicilian',desc:'Pepperoni, chili honey drizzle',price:429,img:'https://images.unsplash.com/photo-1606755892779-0b1da3c7f0f4?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=e3f6'},
+      {id:'p4',cat:'Pizza',name:'Four Cheese Delight',desc:'Mozzarella, gouda, parmesan, gorgonzola',price:459,img:'https://images.unsplash.com/photo-1548365328-9f8b2986f24e?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=6d08d8d6e6d4c0b7a6f6'},
+      {id:'a1',cat:'Pasta',name:'Pesto Genovese',desc:'Handmade trofie, basil pesto, pine nuts',price:299,img:'https://images.unsplash.com/photo-1512058564366-c9e3d2b2d7b6?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=0d2'},
+      {id:'a2',cat:'Pasta',name:'Creamy Alfredo',desc:'Parmesan cream, cracked pepper, parsley',price:319,img:'https://images.unsplash.com/photo-1523986371872-9d3ba2e2f642?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=22f'},
+      {id:'a3',cat:'Pasta',name:'Arrabbiata Penne',desc:'Spicy tomato, garlic, chilli flakes',price:289,img:'https://images.unsplash.com/photo-1523986371872-9d3ba2e2f642?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=22f'},
+      {id:'c1',cat:'Coffee',name:'Flat White',desc:'Velvety microfoam, local roaster',price:149,img:'https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=4b2'},
+      {id:'c2',cat:'Coffee',name:'Cold Brew',desc:'Slow-steeped, smooth and clean',price:129,img:'https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=4b2'},
+      {id:'c3',cat:'Coffee',name:'Cappuccino',desc:'Espresso with frothy milk',price:139,img:'https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=4b2'},
+      {id:'s1',cat:'Sandwich',name:'Caprese Ciabatta',desc:'Mozzarella, tomato, balsamic glaze',price:239,img:'https://images.unsplash.com/photo-1540303675-35d3b8a9a6d6?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=1d9'},
+      {id:'s2',cat:'Sandwich',name:'Grilled Chicken Panini',desc:'Herbed chicken, melted cheese, pesto',price:259,img:'https://images.unsplash.com/photo-1540303675-35d3b8a9a6d6?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=1d9'},
+      {id:'f1',cat:'Sides',name:'Crispy Fries',desc:'Skin-on fries, sea salt',price:129,img:'https://images.unsplash.com/photo-1542444459-db1f4b3b7f6a?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=abc'},
+      {id:'f2',cat:'Sides',name:'Chilli Potato',desc:'Spicy tossed potato bites',price:179,img:'https://images.unsplash.com/photo-1585238342028-3b5d3b5b8b3f?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=def'},
+      {id:'f3',cat:'Sides',name:'Garlic Bread',desc:'Buttery garlic ciabatta',price:99,img:'https://images.unsplash.com/photo-1600891964599-f61ba0e24092?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=ghi'}
+    ];
+
+    /* ----------------- Local storage keys ----------------- */
+    const KEY_CART = 'bb_cart_v1';
+    const KEY_RES = 'bb_res_v1';
+
+    /* ----------------- Init ----------------- */
+    let cart = JSON.parse(localStorage.getItem(KEY_CART) || '[]');
+    let reserves = JSON.parse(localStorage.getItem(KEY_RES) || '[]');
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    function save(){
+      localStorage.setItem(KEY_CART, JSON.stringify(cart));
+      localStorage.setItem(KEY_RES, JSON.stringify(reserves));
+    }
+
+    /* ----------------- Render menu ----------------- */
+    function renderMenu(filter=''){
+      const grid = document.getElementById('menuGrid'); grid.innerHTML='';
+      const filtered = MENU.filter(it => (it.name+it.desc+it.cat).toLowerCase().includes(filter.toLowerCase()));
+      filtered.forEach(it => {
+        const el = document.createElement('div'); el.className='card';
+        el.innerHTML = `
+          <img src="${it.img}" alt="${it.name}" />
+          <h3>${it.name}</h3>
+          <p>${it.desc}</p>
+          <div class="meta"><div class="price">₹${it.price}</div><div style="color:#475569;font-size:13px">${it.cat}</div></div>
+          <div class="actions"><button class="btn" onclick="addToCart('${it.id}')">Add</button><button class="btn ghost" onclick="quickBuy('${it.id}')">Buy now</button></div>
+        `;
+        grid.appendChild(el);
+      });
+    }
+
+    /* search: attach after DOM ready */
+    document.addEventListener('DOMContentLoaded', ()=>{
+      const s = document.getElementById('search');
+      if(s){
+        s.addEventListener('input', (e)=> renderMenu(e.target.value));
+        s.addEventListener('keydown', (e)=>{
+          if(e.key === 'Enter'){
+            const q = e.target.value.trim();
+            renderMenu(q);
+            const menuEl = document.getElementById('menu'); if(menuEl) menuEl.scrollIntoView({behavior:'smooth'});
+          }
+        });
+      }
+
+      // ensure menu container exists and is visible
+      let grid = document.getElementById('menuGrid');
+      const menuSection = document.getElementById('menu');
+      if(!menuSection){
+        const main = document.querySelector('main') || document.body;
+        const section = document.createElement('section'); section.id='menu'; section.className='menu';
+        const h = document.createElement('h2'); h.textContent='Menu'; section.appendChild(h);
+        const div = document.createElement('div'); div.id='menuGrid'; div.className='menu-grid'; section.appendChild(div);
+        main.appendChild(section);
+        grid = div;
+      } else {
+        grid.style.display = '';
+      }
+
+      // bind header/nav interactions
+      const navLinks = document.querySelectorAll('.nav-link');
+      navLinks.forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          const t = btn.textContent.trim().toLowerCase();
+          if(t === 'home') window.scrollTo({top:0,behavior:'smooth'});
+          else if(t === 'menu'){
+            const el = document.getElementById('menu'); if(el) el.scrollIntoView({behavior:'smooth'});
+          } else if(t === 'visit'){
+            const footer = document.querySelector('footer'); if(footer) footer.scrollIntoView({behavior:'smooth'});
+          } else if(t === 'takeaway'){
+            openTakeaway();
+          }
+        });
+
+        btn.addEventListener('keydown', (e)=>{ if(e.key === 'Enter' || e.key === ' ') btn.click(); });
+      });
+
+      // reserve and cart buttons
+      const rbtn = document.getElementById('reserveBtn'); if(rbtn) rbtn.addEventListener('click', ()=> openReserve());
+      const cbtn = document.getElementById('cartBtn'); if(cbtn) cbtn.addEventListener('click', ()=> openCart());
+
+      // initial renders (safe to call after DOM is ready)
+      renderMenu(); renderCart(); renderRes(); renderTakeaways && renderTakeaways();
+    });
+
+    /* ----------------- Cart actions ----------------- */
+    function addToCart(id){
+      const item = MENU.find(m=>m.id===id); if(!item) return;
+      const existing = cart.find(c=>c.id===id);
+      if(existing) existing.qty += 1; else cart.push({ ...item, qty:1 });
+      save(); renderCart(); toast(`${item.name} added to cart`);
+    }
+    function quickBuy(id){ addToCart(id); openTakeaway({ preselectItemId: id }); }
+    function changeQty(id,delta){ cart = cart.map(c=> c.id===id ? {...c, qty: Math.max(1,c.qty+delta)} : c); save(); renderCart(); }
+    function removeItem(id){ cart = cart.filter(c=>c.id!==id); save(); renderCart(); }
+    function clearCart(){ cart=[]; save(); renderCart(); toast('Cart cleared'); }
+
+    function renderCart(){
+      const list = document.getElementById('cartList'); list.innerHTML='';
+      let total = 0; cart.forEach(it=>{
+        total += it.price*it.qty;
+        const row = document.createElement('div'); row.className='cart-item';
+        row.innerHTML = `
+          <img src="${it.img}" style="width:64px;height:64px;border-radius:8px;object-fit:cover" />
+          <div style="flex:1">
+            <div style="font-weight:700">${it.name}</div>
+            <div style="color:#6b7280;font-size:13px">₹${it.price} x ${it.qty}</div>
+          </div>
+          <div class="qty">
+            <button class="btn ghost" onclick="changeQty('${it.id}',-1)">-</button>
+            <div style="padding:6px 10px;border-radius:8px;background:rgba(0,0,0,0.03)">${it.qty}</div>
+            <button class="btn ghost" onclick="changeQty('${it.id}',1)">+</button>
+            <button class="btn ghost" onclick="removeItem('${it.id}')">Remove</button>
+          </div>
+        `;
+        list.appendChild(row);
+      });
+      document.getElementById('total').textContent = total;
+      document.getElementById('cartCount').textContent = cart.reduce((s,i)=>s+i.qty,0);
+    }
+
+    /* ----------------- Checkout (mock) ----------------- */
+    function checkout(method){
+      if(cart.length===0){ toast('Cart is empty'); return; }
+      const total = cart.reduce((s,i)=>s+i.price*i.qty,0);
+
+      toast('Processing payment — ' + (method || 'payment') + '...');
+
+      mockPayment(method, total)
+        .then(result => {
+          if(result.success){
+            cart = [];
+            save();
+            renderCart();
+            toast(`Payment successful — ₹${total}`);
+          } else {
+            toast('Payment failed or cancelled');
+          }
+        })
+        .catch(err=>{
+          console.error('Payment error', err);
+          toast('Payment failed — try again');
+        });
+    }
+
+    /* Mock payment helper (demo only) */
+    function mockPayment(method, amount){
+      return new Promise((resolve)=>{
+        setTimeout(()=>{
+          const ok = Math.random() < 0.95;
+          resolve({ success: ok, method, amount });
+        }, 900);
+      });
+    }
+
+    /* ----------------- Reservations ----------------- */
+    function openReserve(){
+      const modals = document.getElementById('modals') || document.body;
+      const modal = document.createElement('div'); modal.className='modal-backdrop';
+      modal.innerHTML = `
+        <div class="modal">
+          <h3>Reserve a table</h3>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
+            <input id="rname" placeholder="Name" />
+            <input id="rphone" placeholder="Phone (optional)" />
+            <input id="rdate" type="date" />
+            <input id="rtime" type="time" />
+            <input id="rguests" type="number" min="1" value="2" />
+          </div>
+          <div style="margin-top:12px;display:flex;gap:8px;justify-content:flex-end">
+            <button class="btn ghost" onclick="this.closest('.modal-backdrop').remove()">Cancel</button>
+            <button class="btn primary" id="confirmReserveBtn">Confirm</button>
+          </div>
+        </div>
+      `;
+      (modals).appendChild(modal);
+      const confirmBtn = modal.querySelector('#confirmReserveBtn');
+      if(confirmBtn) confirmBtn.addEventListener('click', confirmReserve);
+    }
+
+    function confirmReserve(){
+      const container = document.getElementById('modals') || document.body;
+      const root = container.lastElementChild;
+      if(!root) return alert('Reservation error: modal not found');
+      const nameEl = root.querySelector('#rname');
+      const phoneEl = root.querySelector('#rphone');
+      const dateEl = root.querySelector('#rdate');
+      const timeEl = root.querySelector('#rtime');
+      const guestsEl = root.querySelector('#rguests');
+      const name = nameEl ? nameEl.value.trim() : 'Guest';
+      const phone = phoneEl ? phoneEl.value.trim() : '';
+      const date = dateEl ? dateEl.value : '';
+      const time = timeEl ? timeEl.value : '';
+      const guests = guestsEl ? guestsEl.value : 2;
+      if(!date || !time){
+        if(dateEl) { dateEl.classList.add('input-error'); setTimeout(()=> dateEl.classList.remove('input-error'),1400); }
+        if(timeEl) { timeEl.classList.add('input-error'); setTimeout(()=> timeEl.classList.remove('input-error'),1400); }
+        return alert('Please choose date and time');
+      }
+      const entry = {id:'res_'+Date.now(),name,phone,date,time,guests};
+      reserves.unshift(entry); save(); renderRes();
+      root.remove(); toast('Reservation confirmed — opening email client');
+      // open mail client with prefilled reservation (static demo)
+      const to = encodeURIComponent('hello@bitesandbrew.example');
+      const subject = encodeURIComponent('Reservation confirmation — ' + name);
+      const body = encodeURIComponent(`Hi Bites & Brew,\nI would like to confirm a reservation.\nName: ${name}\nPhone: ${phone}\nDate: ${date}\nTime: ${time}\nGuests: ${guests}\n\nThanks,\n${name}`);
+      window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+    }
+
+    function renderRes(){
+      const el = document.getElementById('resList'); el.innerHTML='';
+      if(reserves.length===0) el.innerHTML = '<div style="color:var(--muted)">No upcoming reservations</div>';
+      reserves.forEach(r=>{
+        const d = document.createElement('div'); d.style.padding='8px'; d.style.borderRadius='8px'; d.style.background='rgba(255,255,255,0.02)'; d.style.marginTop='6px';
+        d.innerHTML = `<div style="font-weight:700">${r.name} — ${r.guests} guests</div><div style="color:#6b7280;font-size:13px">${r.date} at ${r.time}</div>`;
+        el.appendChild(d);
+      });
+    }
+
+    /* ----------------- Takeaway flow ----------------- */
+    function openTakeaway(options = {}){
+      const modals = document.getElementById('modals') || document.body;
+      const modal = document.createElement('div'); modal.className='modal-backdrop';
+      const items = cart || [];
+      let summaryHtml = '<div style="max-height:220px;overflow:auto;margin-bottom:8px">';
+      if(items.length===0) summaryHtml += '<div style="color:var(--muted)">Your cart is empty — add items to place a takeaway order.</div>';
+      items.forEach(it=>{ summaryHtml += `<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(0,0,0,0.03)"><div>${it.name} x ${it.qty}</div><div>₹${it.price*it.qty}</div></div>` });
+      summaryHtml += '</div>';
+      modal.innerHTML = `
+        <div class="modal">
+          <h3>Takeaway Order</h3>
+          ${summaryHtml}
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
+            <input id="tname" placeholder="Full name" />
+            <input id="tphone" placeholder="Phone (optional)" />
+            <input id="tdate" type="date" />
+            <input id="ttime" type="time" />
+            <select id="tpick" ><option value="pickup">Pickup at store</option><option value="curb">Curbside pickup</option></select>
+          </div>
+          <div style="margin-top:12px;display:flex;gap:8px;justify-content:flex-end">
+            <button class="btn ghost" id="cancelTakeBtn">Cancel</button>
+            <button class="btn primary" id="confirmTakeBtn">Confirm Order</button>
+          </div>
+          <p style="margin-top:10px;color:var(--muted);font-size:13px">Confirming will open your email client to send the order details (local demo).</p>
+        </div>
+      `;
+      modals.appendChild(modal);
+      if(options.preselectItemId) addToCart(options.preselectItemId);
+      modal.querySelector('#cancelTakeBtn').addEventListener('click', ()=> modal.remove());
+      modal.querySelector('#confirmTakeBtn').addEventListener('click', ()=> confirmTakeaway(modal));
+    }
+
+    function confirmTakeaway(modal){
+      try{
+        const root = modal || (document.getElementById('modals')||document.body).lastElementChild;
+        if(!root) return alert('Takeaway modal missing');
+        const name = root.querySelector('#tname').value.trim();
+        const phone = root.querySelector('#tphone').value.trim();
+        const date = root.querySelector('#tdate').value;
+        const time = root.querySelector('#ttime').value;
+        const pick = root.querySelector('#tpick').value;
+        if(!name){ root.querySelector('#tname').classList.add('input-error'); setTimeout(()=>root.querySelector('#tname').classList.remove('input-error'),1400); return alert('Please enter your name'); }
+        if(!date || !time){ if(root.querySelector('#tdate')){ root.querySelector('#tdate').classList.add('input-error'); setTimeout(()=>root.querySelector('#tdate').classList.remove('input-error'),1400);} if(root.querySelector('#ttime')){ root.querySelector('#ttime').classList.add('input-error'); setTimeout(()=>root.querySelector('#ttime').classList.remove('input-error'),1400);} return alert('Please choose date and time for pickup'); }
+        const items = cart || [];
+        if(items.length===0) return alert('Your cart is empty — add items to order');
+        const total = items.reduce((s,i)=>s+i.price*i.qty,0);
+        const entry = { id:'take_'+Date.now(), name, phone, date, time, pick, items, total };
+        const KEY = 'bb_take_v1';
+        const stored = JSON.parse(localStorage.getItem(KEY) || '[]'); stored.unshift(entry); localStorage.setItem(KEY, JSON.stringify(stored));
+        renderTakeaways();
+        root.remove(); toast('Takeaway order saved — opening your email client');
+        const to = encodeURIComponent('orders@bitesandbrew.example');
+        const subject = encodeURIComponent('Takeaway order — ' + name);
+        const bodyLines = [`Order for ${name}`, `Phone: ${phone}`, `Pickup: ${date} ${time} (${pick})`, '', 'Items:'];
+        items.forEach(it=> bodyLines.push(`${it.name} x ${it.qty} — ₹${it.price*it.qty}`));
+        bodyLines.push('', `Total: ₹${total}`, '', 'Thanks');
+        const body = encodeURIComponent(bodyLines.join('\n'));
+        window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+      }catch(e){ console.error('confirmTakeaway', e); alert('Failed to place takeaway'); }
+    }
+
+    function renderTakeaways(){
+      const KEY = 'bb_take_v1';
+      const list = JSON.parse(localStorage.getItem(KEY) || '[]');
+      let container = document.getElementById('takeList');
+      if(!container){ const panel = document.getElementById('resList') || document.createElement('div'); if(!panel.id) panel.id='resList'; container = document.createElement('div'); container.id='takeList'; container.style.marginTop = '10px'; panel.parentNode && panel.parentNode.insertBefore(container, panel.nextSibling); }
+      container.innerHTML = '<h4 style="margin:6px 0">Takeaway Orders</h4>';
+      if(list.length===0) container.innerHTML += '<div style="color:var(--muted)">No recent takeaway orders</div>';
+      list.forEach(t=>{
+        const d = document.createElement('div'); d.style.padding='8px'; d.style.borderRadius='8px'; d.style.background='rgba(255,255,255,0.02)'; d.style.marginTop='6px';
+        d.innerHTML = `<div style="font-weight:700">${t.name} — ₹${t.total}</div><div style="color:var(--muted);font-size:13px">Pickup: ${t.date} ${t.time} — ${t.pick}</div>`;
+        container.appendChild(d);
+      });
+    }
+
+    /* ----------------- Feedback ----------------- */
+    function sendFeedback(){ const t = document.getElementById('feedbackTxt').value.trim(); if(!t){ toast('Feedback is empty'); return; } document.getElementById('feedbackTxt').value=''; toast('Thanks for the feedback — we read every message'); }
+
+    /* ----------------- Small helpers ----------------- */
+    function toast(msg){
+      const t = document.createElement('div'); t.style.position='fixed'; t.style.left='50%'; t.style.transform='translateX(-50%)'; t.style.bottom='28px'; t.style.background='linear-gradient(90deg,var(--accent-1),var(--accent-2))'; t.style.color='#071024'; t.style.padding='12px 18px'; t.style.borderRadius='999px'; t.style.boxShadow='0 12px 30px rgba(0,0,0,0.5)'; t.style.zIndex=9999; t.textContent = msg;
+      document.body.appendChild(t); setTimeout(()=> t.style.opacity='0',2200); setTimeout(()=> t.remove(),2600);
+    }
+
+    function applyPromo(){ const p = document.getElementById('promo').value.trim(); if(!p) return toast('Enter promo'); toast('Promo applied: ' + p); }
+
+    function scrollToMenu(){ const el = document.getElementById('menu'); if(el) el.scrollIntoView({behavior:'smooth'}); else { renderMenu(); const m = document.getElementById('menu'); if(m) m.scrollIntoView({behavior:'smooth'}); } }
+
+    function openCart(){ document.getElementById('cartBtn').classList.add('pulse'); setTimeout(()=>document.getElementById('cartBtn').classList.remove('pulse'),400); document.querySelector('aside').scrollIntoView({behavior:'smooth'}); }
+
+    document.getElementById('cartBtn').addEventListener('click', ()=> openCart());
+    document.getElementById('reserveBtn').addEventListener('click', ()=> openReserve());
+
+    /* keyboard shortcut: c -> open cart */
+    window.addEventListener('keydown', (e)=>{ if(e.key.toLowerCase()==='c') openCart(); });
+
+    /* quick init */
+    renderMenu(); renderCart(); renderRes(); renderTakeaways();
+
+    /* extra: show sample toast on first load */
+    if(!localStorage.getItem('bb_seen_intro')){ setTimeout(()=> toast('Welcome! Press "c" to open cart — try the demo.'),800); localStorage.setItem('bb_seen_intro','1'); }
+  </script>
+
+  <!-- small robust patch to ensure Order Now scrolls to menu -->
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    function goToMenuAndRender() {
+      try {
+        if (typeof renderMenu === 'function') renderMenu('');
+        const menuEl = document.getElementById('menu');
+        if (menuEl) {
+          menuEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          menuEl.style.transition = 'box-shadow .35s ease';
+          menuEl.style.boxShadow = '0 20px 50px rgba(0,210,204,0.08)';
+          setTimeout(()=> menuEl.style.boxShadow = '', 800);
+        } else {
+          if (typeof renderMenuForce === 'function') { renderMenuForce(''); const el = document.getElementById('menu'); if(el) el.scrollIntoView({behavior:'smooth'}); }
+        }
+      } catch (err) { console.warn('goToMenuAndRender error', err); }
+    }
+
+    const buttons = Array.from(document.querySelectorAll('button'));
+    buttons.forEach(btn => {
+      const txt = (btn.textContent || '').trim().toLowerCase();
+      if (txt === 'order now' || txt === 'order' || txt.includes('order now') || btn.classList.contains('buy-now-btn') || btn.classList.contains('buy-btn')) {
+        btn.addEventListener('click', (e) => { e.preventDefault(); goToMenuAndRender(); });
+      }
+    });
+
+    const heroOrder = document.querySelector('button[onclick*="scrollToMenu"]');
+    if (heroOrder) {
+      heroOrder.addEventListener('click', (e) => { e.preventDefault(); goToMenuAndRender(); });
+    }
+  });
+  </script>
+
+</body>
+</html>
